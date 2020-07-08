@@ -10,7 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
+/**
+ * Main game class. All user input is handled here.
+ * @author sumeetkulkarni
+ *
+ */
 public class SidekickGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	BitmapFont font;

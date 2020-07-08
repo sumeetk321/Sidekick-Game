@@ -2,7 +2,11 @@ package com.mightyfist.sidekickgame;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
+/**
+ * Represents the kicker sprite. Has 4 different possible textures.
+ * @author Sumeet Kulkarni
+ *
+ */
 public class Kicker extends Sprite {
 	private boolean visible;
 	public Kicker(Texture texture) {
