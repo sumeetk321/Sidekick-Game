@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 /**
  * Main game class. All user input is handled here.
- * @author sumeetkulkarni
+ * @author Sumeet Kulkarni
  *
  */
 public class SidekickGame extends ApplicationAdapter {
