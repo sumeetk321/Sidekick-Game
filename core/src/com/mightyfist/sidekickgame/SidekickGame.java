@@ -15,20 +15,25 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  * @author Sumeet Kulkarni
  *
  */
+
+//TODO: Add collision detection for ball and kicker sprite. Add restart ability.
 public class SidekickGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	BitmapFont font;
 	Kicker[] sidekickers;
 	Kicker kicker;
+	Target target;
 	public static final int NUM_SIDEKICK_TEXTURES = 4;
 	ShapeRenderer shapeRenderer;
 	static int i = 0;
-	private float posX, posY;
-
+	int delta = 1;
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+		target = new Target(new Texture(Gdx.files.internal("red_ball.png")));
+		target.setScale(0.1f);
+		target.setPosition(0, 200);
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 
@@ -37,8 +42,7 @@ public class SidekickGame extends ApplicationAdapter {
 		sidekickers[1] = new Kicker(new Texture(Gdx.files.internal("bendingreadystance_cropped.PNG")));
 		sidekickers[2] = new Kicker(new Texture(Gdx.files.internal("chamber_crosshands_cropped.PNG")));
 		sidekickers[3] = new Kicker(new Texture(Gdx.files.internal("finalkick_cropped.PNG")));
-		posX = w / 4 - sidekickers[0].getWidth() / 2;
-		posY = h / 4 - sidekickers[0].getHeight() / 2;
+		
 		Gdx.input.setInputProcessor(new InputProcessor() {
 
 			@Override
@@ -97,13 +101,13 @@ public class SidekickGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		target.update(delta);
 		batch.begin();
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		posX = w / 4 - sidekickers[0].getWidth() / 2;
-		posY = h / 4 - sidekickers[0].getHeight() / 2;
+		
 		sidekickers[i].setScale(0.3f);
 		switch (i) {
 		case 0:
@@ -120,6 +124,7 @@ public class SidekickGame extends ApplicationAdapter {
 			break;
 		}
 		sidekickers[i].draw(batch);
+		target.draw(batch);
 
 		batch.end();
 	}
