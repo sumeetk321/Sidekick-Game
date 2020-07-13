@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public class Target extends Sprite {
 	private boolean visible;
-	private int weight = 1;
+	
 	public Target(Texture texture) {
 		super(texture);
 		setVisible(false);
@@ -25,7 +25,8 @@ public class Target extends Sprite {
 		return visible;
 	}
 
-	public void update(int delta) {
-		this.setY(this.getY()-weight*delta);
+	public void update(double deltaX, double deltaY) {
+		this.setY((float) (this.getY()+deltaY));
+		this.setX((float) (this.getX()+deltaX));
 	}
 }
