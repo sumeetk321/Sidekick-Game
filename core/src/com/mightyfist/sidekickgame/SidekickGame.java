@@ -136,7 +136,7 @@ public class SidekickGame extends ApplicationAdapter {
 				deltaY = target.getY() / -41; //-41 is the average of -12 and -70. If the kicker kicks at the top (y = -12), deltaY should be low. Same for the bottom.
 			}
 		}
-		if(target.getX()>w||target.getX()<-w||target.getY()>h||target.getY()<-h) {
+		if(target.getX()>w||target.getX()<-w||target.getY()>h||target.getY()<-280) {
 			
 			target.setPosition(25, 200);
 			deltaX = 0;
