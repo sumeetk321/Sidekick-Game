@@ -4,7 +4,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +28,8 @@ public class SidekickGame extends ApplicationAdapter {
 	Kicker[] sidekickers;
 	Kicker kicker;
 	Target target;
+	boolean kicked;
+	int score = 0;
 	public static final int NUM_SIDEKICK_TEXTURES = 4;
 	ShapeRenderer shapeRenderer;
 	static int i = 0;
@@ -35,6 +40,7 @@ public class SidekickGame extends ApplicationAdapter {
 	public void create() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+		font.setColor(Color.RED);
 		target = new Target(new Texture(Gdx.files.internal("red_ball.png")));
 		target.setScale(0.1f);
 		target.setPosition(25, 200);
@@ -105,13 +111,15 @@ public class SidekickGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+
 		target.update(deltaX, deltaY);
-		batch.begin();
+
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		Gdx.gl.glClearColor(.25f, .25f, .25f, 1);
+		Gdx.gl.glClearColor(0.25f, 0.25f, 0.25f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		batch.begin();
+		font.draw(batch, "Score: " + score, 50, 450);
 		sidekickers[i].setScale(0.3f);
 		switch (i) {
 		case 0:
@@ -130,17 +138,24 @@ public class SidekickGame extends ApplicationAdapter {
 		sidekickers[i].draw(batch);
 		target.draw(batch);
 		if (i == 3 && sidekickers[i].getBoundingRectangle().overlaps(target.getBoundingRectangle())) {
-			//System.out.println("TOUCHING " + target.getX() + ", " + target.getY());
+			// System.out.println("TOUCHING " + target.getX() + ", " + target.getY());
 			if (target.getY() <= -12 && target.getY() >= -70) {
-				deltaX = -0.1 * ((target.getY() + 12) * (target.getY() + 70)); // Polynomial. Equal to 0 if kicker kicks at very top or very bottom of ball.
-				deltaY = target.getY() / -41; //-41 is the average of -12 and -70. If the kicker kicks at the top (y = -12), deltaY should be low. Same for the bottom.
+				deltaX = -0.1 * ((target.getY() + 12) * (target.getY() + 70)); // Polynomial. Equal to 0 if kicker kicks
+																				// at very top or very bottom of ball.
+				deltaY = target.getY() / -41; // -41 is the average of -12 and -70. If the kicker kicks at the top (y =
+												// -12), deltaY should be low. Same for the bottom.
+				if (!kicked) {
+					addScore();
+				}
+				kicked = true;
 			}
 		}
-		if(target.getX()>w||target.getX()<-w||target.getY()>200||target.getY()<-280) {
-			
+		if (target.getX() > w || target.getX() < -w || target.getY() > 200 || target.getY() < -280) {
+
 			target.setPosition(25, 200);
 			deltaX = 0;
 			deltaY = -1;
+			kicked = false;
 		}
 		batch.end();
 	}
@@ -154,6 +169,10 @@ public class SidekickGame extends ApplicationAdapter {
 	private void onMouseDown() {
 		i++;
 		i %= 4;
+	}
+
+	private void addScore() {
+		score++;
 	}
 
 }
