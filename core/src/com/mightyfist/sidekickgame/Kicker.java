@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * @author Sumeet Kulkarni
  *
  */
+
+//Assets are pictures of Grandmaster Donato Nardizzi
 public class Kicker extends Sprite {
 	private boolean visible;
 	public Kicker(Texture texture) {
